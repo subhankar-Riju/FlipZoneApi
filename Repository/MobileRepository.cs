@@ -19,25 +19,29 @@ namespace FlipZoneApi.Repository
         }
         public async Task<IEnumerable<MobileModel>> GetAllMobiles(CursorParams cursorParams)
         {
-            var record = await _context.Mobiles.ToListAsync();
+            var record = await _context.Mobiles
+                .OrderByDescending(x => x.price)
+                .ToListAsync();
+                
+                
             
-            record =record.OrderByDescending(x => x.price).ToList();
             record = record.Skip(cursorParams.count * cursorParams.cursor)
                 .Take(cursorParams.count)
                 .ToList();
-            
 
-            var re = record.Select(x => new MobileModel()
+            var rec = record.Select(x => new MobileModel()
             {
-                price=x.price,
+                p_id=x.p_id,
                 brand=x.brand,
-                rating=x.rating,
                 model=x.model,
+                price=x.price,
                 quantity=x.quantity,
-                p_id=x.p_id
+                rating=x.rating
             });
 
-            return re;
+            
+
+            return rec;
                 
         }
     }

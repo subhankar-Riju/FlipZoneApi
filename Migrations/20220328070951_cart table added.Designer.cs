@@ -3,76 +3,22 @@ using FlipZoneApi.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace FlipZoneApi.Migrations
 {
     [DbContext(typeof(FlipzoneDbContext))]
-    partial class FlipzoneDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220328070951_cart table added")]
+    partial class carttableadded
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("ProductVersion", "5.0.15")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-            modelBuilder.Entity("FlipZoneApi.Data.Buy", b =>
-                {
-                    b.Property<string>("brand")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("p_id")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("email")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("model")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<double>("price")
-                        .HasColumnType("float");
-
-                    b.Property<int>("quantity")
-                        .HasColumnType("int");
-
-                    b.Property<double>("rating")
-                        .HasColumnType("float");
-
-                    b.HasKey("brand", "p_id");
-
-                    b.ToTable("Buys");
-                });
-
-            modelBuilder.Entity("FlipZoneApi.Data.Cart", b =>
-                {
-                    b.Property<string>("brand")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("p_id")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("email")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("model")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<double>("price")
-                        .HasColumnType("float");
-
-                    b.Property<int>("quantity")
-                        .HasColumnType("int");
-
-                    b.Property<double>("rating")
-                        .HasColumnType("float");
-
-                    b.HasKey("brand", "p_id");
-
-                    b.ToTable("Carts");
-                });
 
             modelBuilder.Entity("FlipZoneApi.Data.Customer", b =>
                 {

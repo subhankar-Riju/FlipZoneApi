@@ -17,5 +17,22 @@ namespace FlipZoneApi.Data
         public DbSet<Laptop> Laptops { get; set; }
         public DbSet<Tablet> Tablets { get; set; }
         public DbSet<Customer> Customers { get; set; }
+        public DbSet<Cart> Carts { get; set; }
+        public DbSet<Buy> Buys { get; set; }
+
+       protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<Cart>().HasKey(x => new
+            {
+                x.brand,
+                x.p_id
+            });
+
+            modelBuilder.Entity<Buy>().HasKey(x => new
+            {
+                x.brand,
+                x.p_id
+            });
+        }
     }
 }
