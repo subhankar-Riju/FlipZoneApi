@@ -14,10 +14,9 @@ namespace FlipZoneApi.Data
         [Key]
         //[Column(Order =2)]
         public string p_id { set; get; }
-        public string brand { get; set; }
-        public string model { get; set; }
-        public double price { get; set; }
+
         public int quantity { get; set; }
-        public double rating { get; set; }
+
+        public string dateTime { set; get; }
     }
 }

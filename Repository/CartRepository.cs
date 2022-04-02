@@ -19,15 +19,15 @@ namespace FlipZoneApi.Repository
 
         public async Task AddtoCart(CartModel cartModel)
         {
-            var c= new Cart()
+            var c = new Cart()
             {
-                email=cartModel.email,
-                p_id= cartModel.p_id,
-                brand= cartModel.brand,
-                price= cartModel.price,
-                rating= cartModel.rating,
-                model= cartModel.model,
-                quantity=cartModel.quantity
+                email = cartModel.email,
+                p_id = cartModel.p_id,
+                brand = cartModel.brand,
+                price = cartModel.price,
+                rating = cartModel.rating,
+                model = cartModel.model,
+                quantity = 1
             };
            await  _context.Carts.AddAsync(c);
             await _context.SaveChangesAsync();
@@ -57,15 +57,26 @@ namespace FlipZoneApi.Repository
             return rec;
         }
 
-        public async Task<IEnumerable<Cart>> GetQuantity(string email,string p_id)
+        public  IEnumerable<CartAccountMobileModel> GetQuantity(string email)
         {
 
-            var record = await _context.Carts
-                .Where(x => x.email == email)
-                .Where(x => x.p_id == p_id)
-                .ToListAsync();
-                ;
-            return record;
+            IEnumerable<CartAccountMobileModel> list = from cols in _context.Mobiles
+                       from c in _context.Carts
+                       from a in _context.Customers
+                       where a.email==email && cols.model == c.model && a.email == c.email
+                       select new CartAccountMobileModel
+                       {
+                           p_id=cols.p_id,
+                           email=c.email,
+                           c_qant=c.quantity,
+                           m_qant=cols.quantity
+
+                       };
+
+
+            return list; 
+            
+            
         }
 
         public async Task<int> IncrementQuantity(CartModel cartModel)
@@ -86,19 +97,36 @@ namespace FlipZoneApi.Repository
             return -1;
 
 
+        }
 
+        public async Task<int> DecrementQuantity(CartModel cartModel)
+        {
 
+            var record = await _context.Carts
+                .Where(x => x.email == cartModel.email)
+                .Where(x => x.p_id == cartModel.p_id)
+                .FirstOrDefaultAsync();
 
+            if (record != null)
+            {
+                if (record.quantity > 0)
+                {
+                    record.quantity = --cartModel.quantity;
+                }
+                
+                await _context.SaveChangesAsync();
+                return 1;
+            }
 
-
+            return -1;
 
 
         }
-                
-                
 
-               
-            
-        }
+
+
+
+
+    }
     }
 

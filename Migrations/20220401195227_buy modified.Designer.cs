@@ -3,14 +3,16 @@ using FlipZoneApi.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace FlipZoneApi.Migrations
 {
     [DbContext(typeof(FlipzoneDbContext))]
-    partial class FlipzoneDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220401195227_buy modified")]
+    partial class buymodified
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -26,13 +28,10 @@ namespace FlipZoneApi.Migrations
                     b.Property<string>("p_id")
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<string>("dateTime")
-                        .HasColumnType("nvarchar(450)");
-
                     b.Property<int>("quantity")
                         .HasColumnType("int");
 
-                    b.HasKey("email", "p_id", "dateTime");
+                    b.HasKey("email", "p_id");
 
                     b.ToTable("Buys");
                 });

@@ -59,6 +59,8 @@ namespace FlipZoneApi
             services.AddTransient<IAccountRepository, AccountRepository>();
             services.AddTransient<IMobileRepository, MobileRepository>();
             services.AddTransient<ICartRepository, CartRepository>();
+            services.AddTransient<IBuyRepository, BuyRepository>();
+
 
             services.AddDbContext<FlipzoneDbContext>(
                 options => options.UseSqlServer(Configuration.GetConnectionString("FlipZoneDb"))

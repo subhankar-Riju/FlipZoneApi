@@ -3,14 +3,16 @@ using FlipZoneApi.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace FlipZoneApi.Migrations
 {
     [DbContext(typeof(FlipzoneDbContext))]
-    partial class FlipzoneDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220402063107_dateTime field added buy_table")]
+    partial class dateTimefieldaddedbuy_table
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

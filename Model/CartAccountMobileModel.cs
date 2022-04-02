@@ -5,18 +5,12 @@ using System.Threading.Tasks;
 
 namespace FlipZoneApi.Model
 {
-    public class BuyModel
+    public class CartAccountMobileModel
     {
-        
-        //[Column(Order=1)]
         public string email { set; get; }
-        
-        //[Column(Order =2)]
+        public double c_qant { set; get; }
+        public double m_qant { set; get; }
         public string p_id { set; get; }
-        public int quantity { get; set; }
-        public string dateTime { set; get; }
-
-
 
     }
 }

@@ -30,19 +30,30 @@ namespace FlipZoneApi.Controllers
         [HttpGet("/GetCartItems/{email}/{count}/{cursor}")]
         public async Task<IActionResult> GetCartItems([FromRoute]string email,[FromRoute]CursorParams @params)
         {
-           var records= await _cartRepository.GetCartItems(email, @params);
+             var records= await _cartRepository.GetCartItems(email, @params);
+           // var records =  _cartRepository.GetQuantity(email);
 
             return Ok(records);
         }
 
-        [HttpPost("/incrementqantity")]
-        public async Task<IActionResult> IncrementQuantityasync([FromBody]CartModel cartModel)
+        [HttpPost("/incrementqantity/{IoD}")]
+        public async Task<IActionResult> IncrementQuantityasync([FromBody]CartModel cartModel,[FromRoute]int IoD)
         {
+            if (IoD == -1)
+            {
+                var re = await _cartRepository.DecrementQuantity(cartModel);
+                return Ok(re);
+            }
+            else
+            {
+                var re = await _cartRepository.IncrementQuantity(cartModel);
+                return Ok(re);
+            }
             
             
-            var re = await _cartRepository.IncrementQuantity(cartModel);
-            return Ok(re);
         }
+
+        
 
 
     }

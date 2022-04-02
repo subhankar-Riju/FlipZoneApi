@@ -24,14 +24,15 @@ namespace FlipZoneApi.Data
         {
             modelBuilder.Entity<Cart>().HasKey(x => new
             {
-                x.brand,
+                x.email,
                 x.p_id
             });
 
             modelBuilder.Entity<Buy>().HasKey(x => new
             {
-                x.brand,
-                x.p_id
+                x.email,
+                x.p_id,
+                x.dateTime
             });
         }
     }
