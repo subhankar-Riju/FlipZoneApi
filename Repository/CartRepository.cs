@@ -17,8 +17,15 @@ namespace FlipZoneApi.Repository
             _context = context;
         }
 
-        public async Task AddtoCart(CartModel cartModel)
+        public async Task<int> AddtoCart(CartModel cartModel)
         {
+            var check = await _context.Carts
+                .Where(x => x.email == cartModel.email && x.p_id == cartModel.p_id)
+                .FirstOrDefaultAsync();
+            if (check != null)
+            {
+                return -1;
+            }
             var c = new Cart()
             {
                 email = cartModel.email,
@@ -31,16 +38,21 @@ namespace FlipZoneApi.Repository
             };
            await  _context.Carts.AddAsync(c);
             await _context.SaveChangesAsync();
+
+            return 1;
         }
 
-        public async Task<IEnumerable<CartModel>> GetCartItems(string email,CursorParams @params)
+        public async Task<object> GetCartItems(string email,CursorParams @params)
         {
             var record = await _context.Carts
-                .Where(x=> x.email.Contains(email))
+                .Where(x => x.email.Contains(email))
+                .ToListAsync();
+            var count = record.Sum(x => (x.price*x.quantity));
+            record=record
                 .OrderByDescending(x => x.price)
                 .Skip(@params.count*@params.cursor)
                 .Take(@params.count)
-                .ToListAsync();
+                .ToList();
 
             var rec = record.Select(x=>new CartModel()
             {
@@ -53,8 +65,12 @@ namespace FlipZoneApi.Repository
                 quantity=x.quantity
 
             });
-            
-            return rec;
+
+            return new {
+                totalPrice = count,
+                record = rec
+
+            };
         }
 
         public  IEnumerable<CartAccountMobileModel> GetQuantity(string email)

@@ -63,6 +63,7 @@ namespace FlipZoneApi.Repository
                 .ToListAsync();
 
             foreach(var item in cartItems){
+                //implemeted for mobiles
                 if (item.p_id.StartsWith("M"))
                 {
                     var mob = new MobileModel()

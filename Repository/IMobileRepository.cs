@@ -9,5 +9,6 @@ namespace FlipZoneApi.Repository
     public interface IMobileRepository
     {
         Task<IEnumerable<MobileModel>> GetAllMobiles(CursorParams cursorParams);
+        Task<IEnumerable<MobileModel>> SearchMobileAsync(string search, CursorParams cursorParams);
     }
 }

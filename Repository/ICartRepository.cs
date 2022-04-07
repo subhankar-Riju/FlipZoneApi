@@ -9,8 +9,8 @@ namespace FlipZoneApi.Repository
 {
     public interface ICartRepository
     {
-        Task AddtoCart(CartModel cart);
-        Task<IEnumerable<CartModel>> GetCartItems(string email, CursorParams @params);
+        Task<int> AddtoCart(CartModel cart);
+        Task<object> GetCartItems(string email, CursorParams @params);
         IEnumerable<CartAccountMobileModel> GetQuantity(string email);
         Task<int> IncrementQuantity(CartModel cartModel);
         Task<int> DecrementQuantity(CartModel cartModel);

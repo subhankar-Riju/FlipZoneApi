@@ -1,5 +1,6 @@
 ﻿using FlipZoneApi.Model;
 using FlipZoneApi.Repository;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -11,6 +12,7 @@ namespace FlipZoneApi.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    //[Authorize]
     public class MobileController : ControllerBase
     {
         private readonly IMobileRepository _mobile;
@@ -32,6 +34,17 @@ namespace FlipZoneApi.Controllers
 
             });
 
+        }
+            
+        [HttpGet("/SearchMobiles/{count}/{cursor}/{search}")]
+        public async Task<IActionResult> SearchMobilesAsync([FromRoute]CursorParams cursorParams,[FromRoute]string search)
+        {
+            var result = await _mobile.SearchMobileAsync(search, cursorParams);
+            return Ok(new
+            {
+                count = result.Count(),
+                record = result
+            });
         }
     }
 }

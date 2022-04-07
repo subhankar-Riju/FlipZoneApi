@@ -14,17 +14,20 @@ namespace FlipZoneApi.Controllers
     public class CartController : ControllerBase
     {
         private readonly ICartRepository _cartRepository;
+        private readonly IBuyRepository _buyRepository;
 
-        public CartController(ICartRepository cartRepository)
+        public CartController(ICartRepository cartRepository,
+            IBuyRepository buyRepository)
         {
             _cartRepository = cartRepository;
+            _buyRepository = buyRepository;
         }
 
         [HttpPost("/AddToCart")]
         public async Task<IActionResult> AddTocartasync([FromBody] CartModel cartModel)
         {
-            await _cartRepository.AddtoCart(cartModel);
-            return Ok();
+            var record=await _cartRepository.AddtoCart(cartModel);
+            return Ok(record);
         }
 
         [HttpGet("/GetCartItems/{email}/{count}/{cursor}")]
@@ -51,6 +54,14 @@ namespace FlipZoneApi.Controllers
             }
             
             
+        }
+
+        [HttpDelete("/deleteFromcart/{email}/{p_id}")]
+
+        public async Task<IActionResult> DeletefromCart([FromRoute]string email,[FromRoute]string p_id)
+        {
+            var result = await _buyRepository.DeleteMobileCart(p_id, email);
+            return Ok(result);
         }
 
         
