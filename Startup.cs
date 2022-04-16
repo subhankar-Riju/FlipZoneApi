@@ -60,6 +60,8 @@ namespace FlipZoneApi
             services.AddTransient<IMobileRepository, MobileRepository>();
             services.AddTransient<ICartRepository, CartRepository>();
             services.AddTransient<IBuyRepository, BuyRepository>();
+            services.AddTransient<IAddressRepository, AddressRepository>();
+
 
 
             services.AddDbContext<FlipzoneDbContext>(

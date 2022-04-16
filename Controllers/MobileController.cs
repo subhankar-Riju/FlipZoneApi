@@ -21,10 +21,11 @@ namespace FlipZoneApi.Controllers
         {
             _mobile = mobile;
         }
-         [HttpGet("GetMobiles/{count}/{cursor}")]
-         public async Task<IActionResult> GetAllMobilesasync([FromRoute]CursorParams cursorParams)
+         [HttpPost("GetMobiles/{count}/{cursor}")]
+         public async Task<IActionResult> GetAllMobilesasync([FromRoute]CursorParams cursorParams
+             ,[FromBody]MobileSearchFilterModel sfill)
         {
-            var record = await _mobile.GetAllMobiles(cursorParams);
+            var record = await _mobile.GetAllMobiles(cursorParams,sfill);
 
             return Ok(new
             {
