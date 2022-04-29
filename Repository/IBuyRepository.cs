@@ -11,5 +11,6 @@ namespace FlipZoneApi.Repository
         Task<int> BuyMobile(MobileModel mobile, string email,bool fromCart=false);
         Task<string> BuyCart(string email);
         Task<int> DeleteMobileCart(string p_id, string email);
+        Task<object> BuyHistoryAsync(string email,CursorParams @params);
     }
 }

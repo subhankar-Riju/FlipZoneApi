@@ -17,7 +17,7 @@ namespace FlipZoneApi.Repository
         {
             _context = context;
         }
-        public async Task<IEnumerable<MobileModel>> GetAllMobiles(CursorParams cursorParams,MobileSearchFilterModel sfill)        {
+        public async Task<Object> GetAllMobiles(CursorParams cursorParams,MobileSearchFilterModel sfill)        {
 
              var record = await _context.Mobiles
                 .OrderBy(m=>m.price)
@@ -92,7 +92,7 @@ namespace FlipZoneApi.Repository
 
 
 
-
+            var Count = record.Count();
             record = record
                 .Skip(cursorParams.count * cursorParams.cursor)
                 .Take(cursorParams.count)
@@ -110,7 +110,12 @@ namespace FlipZoneApi.Repository
 
 
 
-            return rec;
+            return new {
+                count=Count,
+                record = rec
+
+            }
+                ;
 
         }
 

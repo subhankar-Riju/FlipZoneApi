@@ -40,29 +40,25 @@ namespace FlipZoneApi.Repository
 
         public async Task PostAddressAsync(AddressModel m)
         {
-            var rec = new Address()
-            {
-                email = m.email,
-                addr = m.addr,
-                city = m.city,
-                district = m.district,
-                country = m.country,
-                mobile = m.mobile,
-                pin = m.pin
-            };
-
-            await _context.Addresses.AddAsync(rec);
-            await _context.SaveChangesAsync();
-
-
-        }
-
-        public async Task PutAddressAsync(AddressModel m)
-        {
             var record = await _context.Addresses
                 .FirstOrDefaultAsync(x => x.email == m.email);
+            if (record == null)
+            {
+                var rec = new Address()
+                {
+                    email = m.email,
+                    addr = m.addr,
+                    city = m.city,
+                    district = m.district,
+                    country = m.country,
+                    mobile = m.mobile,
+                    pin = m.pin
+                };
 
-            if (record != null)
+                await _context.Addresses.AddAsync(rec);
+                await _context.SaveChangesAsync();
+            }
+            else
             {
                 record.addr = m.addr;
                 record.city = m.city;
@@ -73,9 +69,11 @@ namespace FlipZoneApi.Repository
                 record.pin = m.pin;
 
                 await _context.SaveChangesAsync();
-                   
             }
 
+
         }
+
+       
     }
 }

@@ -27,13 +27,7 @@ namespace FlipZoneApi.Controllers
         {
             var record = await _mobile.GetAllMobiles(cursorParams,sfill);
 
-            return Ok(new
-            {
-                count=record.Count(),
-                data=record,
-               
-
-            });
+            return Ok(record);
 
         }
             

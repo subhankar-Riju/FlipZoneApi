@@ -80,11 +80,12 @@ namespace FlipZoneApi.Repository
 
                     //return "buyMobile" + result;
 
-                  var del=  DeleteMobileCart(item.p_id, email);
+                  var del=await  DeleteMobileCart(item.p_id, email);
                     //return "deletemobilecart" + del;
 
                 }
-                return "hello";
+               // return "no mobile";
+
             }
 
             return "sucess";
@@ -106,6 +107,32 @@ namespace FlipZoneApi.Repository
             }
 
             return -1;
+        }
+
+        public async Task<object> BuyHistoryAsync(string email,CursorParams @params)
+        {
+            IEnumerable<object> data = from m in _context.Mobiles
+                                       from b in _context.Buys
+                                       where m.p_id == b.p_id && b.email == email
+                                       select new
+                                       {
+                                           p_id=m.p_id,
+                                           price=m.price,
+                                           model=m.model,
+                                           brand=m.brand,
+                                           quantity=b.quantity,
+                                           rating=m.rating,
+                                           dateTime=b.dateTime,
+                                           
+                                       };
+            var Count = data.Count();
+            data = data.Skip(@params.count * @params.cursor)
+                .Take(@params.count);
+
+            return new { 
+                    count=Count,
+                    data=data
+            };
         }
     }
 }

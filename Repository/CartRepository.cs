@@ -102,8 +102,11 @@ namespace FlipZoneApi.Repository
                 .Where(x => x.email == cartModel.email)
                 .Where(x => x.p_id == cartModel.p_id)
                 .FirstOrDefaultAsync();
+            var mob = await _context.Mobiles
+                .Where(m => m.p_id == cartModel.p_id)
+                .FirstOrDefaultAsync();
 
-            if (record != null)
+            if (record != null && mob!=null && mob.quantity> record.quantity-1)
             {
                 record.quantity = ++cartModel.quantity;
                 await _context.SaveChangesAsync();

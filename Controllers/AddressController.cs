@@ -34,11 +34,11 @@ namespace FlipZoneApi.Controllers
             return Ok("done");
         }
 
-        [HttpPut("PutAddress")]
+        /*[HttpPut("PutAddress")]
         public async Task<IActionResult> PutAddressAsync([FromBody]AddressModel adr)
         {
             await _address.PutAddressAsync(adr);
             return Ok();
-        }
+        }*/
     }
 }

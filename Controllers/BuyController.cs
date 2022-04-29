@@ -36,6 +36,20 @@ namespace FlipZoneApi.Controllers
 
         }
 
+        [HttpPost("/BuyFromCart/{email}")]
+        public async Task<IActionResult> BuyFromCart([FromRoute]string email)
+        {
+            var result = await _buyRepository.BuyCart(email);
+            return Ok(result);
+        }
+
+        [HttpGet("/History/{email}/{count}/{cursor}")]
+        public async Task<IActionResult> BuyHistory([FromRoute]string email,[FromRoute]CursorParams @params)
+        {
+            var result = await _buyRepository.BuyHistoryAsync(email,@params);
+            return Ok(result);
+        }
+
 
     }
 }

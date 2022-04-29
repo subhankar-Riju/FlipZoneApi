@@ -10,6 +10,6 @@ namespace FlipZoneApi.Repository
     {
         Task<IEnumerable<AddressModel>> GetAddressAsync(string email);
         Task PostAddressAsync(AddressModel m);
-        Task PutAddressAsync(AddressModel m);
+        //Task PutAddressAsync(AddressModel m);
     }
 }
